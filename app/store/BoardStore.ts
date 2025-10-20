@@ -1,19 +1,19 @@
-import { defineStore } from "pinia";
-import { ref } from "vue";
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
 
-interface IBoard {
+export interface IBoard {
   title: string;
   columns: ITaskColum[];
   id: number;
 }
 
-interface ITaskColum {
+export interface ITaskColum {
   title: string;
   tasks: ITask[];
   id: number;
 }
 
-interface ITask {
+export interface ITask {
   title: string;
   description: string;
   id: number;
@@ -27,7 +27,7 @@ class Board implements IBoard {
   constructor(title: string) {
     this.title = title;
     this.columns = [];
-    this.id = Date.now();
+    this.id = Date.now() + +(Math.random() * 1000).toFixed();
   }
 }
 
@@ -37,7 +37,7 @@ class TaskColumn implements ITaskColum {
   title: string;
 
   constructor(title: string) {
-    this.id = Date.now();
+    this.id = Date.now() + +(Math.random() * 1000).toFixed();
     this.tasks = [];
     this.title = title;
   }
@@ -51,15 +51,15 @@ class Task implements ITask {
   constructor(title: string, description: string) {
     this.description = description;
     this.title = title;
-    this.id = Date.now();
+    this.id = Date.now() + +(Math.random() * 1000).toFixed();
   }
 }
 
 const mockData = () => {
-  const board1 = new Board("Доставка 1");
-  const board2 = new Board("Доставка 2");
+  const board1 = new Board('Доставка 1');
+  const board2 = new Board('Доставка 2');
 
-  const columnsNames = ["Новые", "В работе", "Завершено"];
+  const columnsNames = ['Новые', 'В работе', 'Завершено'];
 
   columnsNames.forEach((colName, i) => {
     const column = new TaskColumn(colName);
@@ -70,16 +70,22 @@ const mockData = () => {
 
   columnsNames.forEach((colName, i) => {
     const column = new TaskColumn(colName);
-    const task = new Task(`Задача ${i + 4}`, `Описание задачи ${i + 4}`);
-    column.tasks.push(task);
     board2.columns.push(column);
   });
 
   return [board1, board2];
 };
 
-export const useBoardStore = defineStore("board", () => {
+export const useBoardStore = defineStore('board', () => {
   const boards = ref<Board[]>(JSON.parse(JSON.stringify(mockData())));
+  const activeBoard = ref<IBoard | null>(boards.value[0] || null);
+
+  function setActiveBoard(boardId: number) {
+    const targetBoard = boards.value.find((board) => board.id === boardId);
+
+    if (!targetBoard) return;
+    activeBoard.value = targetBoard;
+  }
 
   function addBoard(title: string) {
     const newBoard = new Board(title);
@@ -100,13 +106,22 @@ export const useBoardStore = defineStore("board", () => {
   function removeColumn(columnId: number, boardId: number) {
     const targetBoard = boards.value.find((board) => board.id === boardId);
     if (!targetBoard) return;
-    targetBoard.columns = targetBoard.columns.filter((column) => column.id !== columnId);
+    targetBoard.columns = targetBoard.columns.filter(
+      (column) => column.id !== columnId
+    );
   }
 
-  function addTask(boardId: number, columnId: null, title: string, description: string) {
+  function addTask(
+    boardId: number,
+    columnId: null,
+    title: string,
+    description: string
+  ) {
     const targetBoad = boards.value.find((board) => board.id === boardId);
     if (!targetBoad) return;
-    const targetColumn = targetBoad.columns.find((column) => column.id === columnId);
+    const targetColumn = targetBoad.columns.find(
+      (column) => column.id === columnId
+    );
     if (!targetColumn) return;
     const newTask = new Task(title, description);
     targetColumn.tasks.push(newTask);
@@ -115,13 +130,19 @@ export const useBoardStore = defineStore("board", () => {
   function removeTask(taskId: number, columnId: number, boardId: number) {
     const targetBoad = boards.value.find((board) => board.id === boardId);
     if (!targetBoad) return;
-    const targetColumn = targetBoad.columns.find((column) => column.id === columnId);
+    const targetColumn = targetBoad.columns.find(
+      (column) => column.id === columnId
+    );
     if (!targetColumn) return;
-    targetColumn.tasks = targetColumn.tasks.filter((task) => (task.id = taskId));
+    targetColumn.tasks = targetColumn.tasks.filter(
+      (task) => (task.id = taskId)
+    );
   }
 
   return {
     boards,
+    activeBoard,
+    setActiveBoard,
     addBoard,
     removeBoard,
     addColumn,

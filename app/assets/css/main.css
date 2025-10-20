@@ -1,0 +1,52 @@
+:root {
+  --bg-main: #fff7fa;
+  --bg-column: #fde6ef;
+  --bg-task: #f9d9e4;
+  --bg-task-hover: #f5c6d8;
+  --border-soft: #e8c4d0;
+  --text-main: #5b4a4e;
+  --transition: 0.3s ease;
+}
+
+.dark-theme {
+  --bg-main: #1e1b1e;
+  --bg-column: #2c242a;
+  --bg-task: #3a2f36;
+  --bg-task-hover: #503d45;
+  --border-soft: #5a444d;
+  --text-main: #e6d6da;
+}
+
+html {
+  background: var(--bg-main);
+  color: var(--text-main);
+  transition: background var(--transition), color var(--transition);
+}
+
+.task-column {
+  background: var(--bg-column);
+  box-shadow: 0 0 15px 10px var(--border-soft);
+  transition: background var(--transition), box-shadow var(--transition);
+}
+
+.task {
+  background: var(--bg-task);
+  transition: background var(--transition);
+}
+
+.task:hover {
+  background: var(--bg-task-hover);
+  transition: background var(--transition);
+}
+
+h1 {
+  @apply text-5xl;
+}
+
+h2 {
+  @apply text-3xl;
+}
+
+h3 {
+  @apply text-xl;
+}
