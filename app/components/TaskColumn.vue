@@ -1,15 +1,30 @@
 <template>
-  <article class="task-column p-3">
-    <h2 class="mb-3">{{ props.column.title }}</h2>
-    <ul>
-      <Task v-for="task in props.column.tasks" :task="task" :key="task.id" />
-    </ul>
+  <article class="flex flex-col gap-y-5 task-column p-5">
+    <h2 id="drag-board" class="active:cursor-grabbing cursor-grab">
+      {{ props.column.title }}
+    </h2>
+    <ClientOnly>
+      <draggableComponent
+        v-model="props.column.tasks"
+        group="task"
+        item-key="id"
+        class="flex-1 min-w-56 flex flex-col gap-y-5"
+        tag="ul"
+        :animation="200"
+      >
+        <template #item="{ element }">
+          <Task :task="element" :key="element.id" />
+        </template>
+      </draggableComponent>
+    </ClientOnly>
   </article>
 </template>
 
 <script lang="ts" setup>
-  import type { ITaskColum } from '~/store/BoardStore';
-  const props = defineProps<{ column: ITaskColum }>();
+  import type { ITaskColumn } from '~/store/BoardStore';
+  import draggableComponent from 'vuedraggable';
+
+  const props = defineProps<{ column: ITaskColumn }>();
 </script>
 
 <style></style>

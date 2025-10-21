@@ -1,18 +1,26 @@
 <template>
-  <section class="board">
-    <h1 class="mb-5">{{ props.board.title }}</h1>
-    <div class="flex gap-x-6">
-      <TaskColumn
-        v-for="column in props.board.columns"
-        :column="column"
-        :key="column.id"
-      />
-    </div>
+  <section class="board flex gap-x-3 items-start">
+    <ClientOnly>
+      <draggableComponent
+        v-model="props.board.columns"
+        group="taskList"
+        item-key="id"
+        class="flex gap-x-5 min-h-[50dvh]"
+        handle="#drag-board"
+        :animation="200"
+      >
+        <template #item="{ element }">
+          <TaskColumn :column="element" />
+        </template>
+      </draggableComponent>
+    </ClientOnly>
   </section>
 </template>
 
 <script lang="ts" setup>
   import type { IBoard } from '~/store/BoardStore';
+  import draggableComponent from 'vuedraggable';
+
   const props = defineProps<{ board: IBoard }>();
 </script>
 

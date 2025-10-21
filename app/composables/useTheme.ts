@@ -15,5 +15,5 @@ export function useTheme() {
     );
   });
 
-  return { isDark, toggleTheme };
+  return { isDark, toggleTheme, onMounted };
 }

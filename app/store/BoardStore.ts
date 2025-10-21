@@ -3,11 +3,11 @@ import { ref } from 'vue';
 
 export interface IBoard {
   title: string;
-  columns: ITaskColum[];
+  columns: ITaskColumn[];
   id: number;
 }
 
-export interface ITaskColum {
+export interface ITaskColumn {
   title: string;
   tasks: ITask[];
   id: number;
@@ -21,7 +21,7 @@ export interface ITask {
 
 class Board implements IBoard {
   title: string;
-  columns: ITaskColum[];
+  columns: ITaskColumn[];
   id: number;
 
   constructor(title: string) {
@@ -31,7 +31,7 @@ class Board implements IBoard {
   }
 }
 
-class TaskColumn implements ITaskColum {
+class TaskColumn implements ITaskColumn {
   id: number;
   tasks: ITask[];
   title: string;
@@ -113,13 +113,13 @@ export const useBoardStore = defineStore('board', () => {
 
   function addTask(
     boardId: number,
-    columnId: null,
+    columnId: number,
     title: string,
     description: string
   ) {
-    const targetBoad = boards.value.find((board) => board.id === boardId);
-    if (!targetBoad) return;
-    const targetColumn = targetBoad.columns.find(
+    const targetBoard = boards.value.find((board) => board.id === boardId);
+    if (!targetBoard) return;
+    const targetColumn = targetBoard.columns.find(
       (column) => column.id === columnId
     );
     if (!targetColumn) return;
@@ -128,14 +128,14 @@ export const useBoardStore = defineStore('board', () => {
   }
 
   function removeTask(taskId: number, columnId: number, boardId: number) {
-    const targetBoad = boards.value.find((board) => board.id === boardId);
-    if (!targetBoad) return;
-    const targetColumn = targetBoad.columns.find(
+    const targetBoard = boards.value.find((board) => board.id === boardId);
+    if (!targetBoard) return;
+    const targetColumn = targetBoard.columns.find(
       (column) => column.id === columnId
     );
     if (!targetColumn) return;
     targetColumn.tasks = targetColumn.tasks.filter(
-      (task) => (task.id = taskId)
+      (task) => task.id !== taskId
     );
   }
 
