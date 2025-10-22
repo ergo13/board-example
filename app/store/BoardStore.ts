@@ -61,12 +61,12 @@ const mockData = () => {
 
   const columnsNames = ['Новые', 'В работе', 'Завершено'];
 
-  columnsNames.forEach((colName, i) => {
-    const column = new TaskColumn(colName);
-    const task = new Task(`Задача ${i + 1}`, `Описание задачи ${i + 1}`);
-    column.tasks.push(task);
-    board1.columns.push(column);
-  });
+  // columnsNames.forEach((colName, i) => {
+  //   const column = new TaskColumn(colName);
+  //   const task = new Task(`Задача ${i + 1}`, `Описание задачи ${i + 1}`);
+  //   column.tasks.push(task);
+  //   board1.columns.push(column);
+  // });
 
   columnsNames.forEach((colName, i) => {
     const column = new TaskColumn(colName);
@@ -77,7 +77,9 @@ const mockData = () => {
 };
 
 export const useBoardStore = defineStore('board', () => {
-  const boards = ref<Board[]>(JSON.parse(JSON.stringify(mockData())));
+  const boards = ref<Board[]>(
+    JSON.parse(JSON.stringify(mockData()))
+  );
   const activeBoard = ref<IBoard | null>(boards.value[0] || null);
 
   function setActiveBoard(boardId: number) {
