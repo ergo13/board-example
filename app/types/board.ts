@@ -45,7 +45,7 @@ export class TaskRecord implements ITask {
   id: number;
   title: string;
 
-  constructor(title: string, description: string) {
+  constructor(title: string = 'Новая задача', description: string = 'Описание') {
     this.description = description;
     this.title = title;
     this.id = Date.now() + +(Math.random() * 1000).toFixed();

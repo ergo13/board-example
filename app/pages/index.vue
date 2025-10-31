@@ -22,12 +22,20 @@
     :board="boardStore.activeBoard"
   />
   <h2 class="order-4" v-else>Досок нет</h2>
+  <UiModal
+    v-show="visible"
+    :visible="visible"
+    :component="componentToShow"
+    :modal-data="modalData"
+    @close="closeModal"
+  />
 </template>
 
 <script lang="ts" setup>
   import { useBoardStore } from '~/store/BoardStore';
   const boardStore = useBoardStore();
   const { toggleTheme, isDark } = useTheme();
+  const { visible, modalData, componentToShow, closeModal } = useModal();
 </script>
 
 <style></style>

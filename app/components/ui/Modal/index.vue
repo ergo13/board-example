@@ -2,9 +2,9 @@
   <ClientOnly>
     <Transition>
       <Teleport to="body">
-        <div v-if="visible" class="ui-modal" @click.self="modalClose">
-          <span> pupa {{ props.modalType }} </span>
-        </div>
+        <div v-if="props.visible" class="ui-modal" @click.self="$emit('close')">
+        <component :is="props.component" v-bind="props.modalData" />
+      </div>
       </Teleport>
     </Transition>
   </ClientOnly>
@@ -12,17 +12,14 @@
 
 <script lang="ts" setup>
   const props = defineProps<{
-    modalType: string;
     visible: boolean;
+    component: string;
+    modalData: any;
   }>();
 
   const emit = defineEmits<{
     (e: 'close'): void;
   }>();
-
-  function modalClose() {
-    emit('close');
-  }
 </script>
 
 <style scoped>
@@ -38,16 +35,12 @@
 
   .ui-modal {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    inset: 0;
     background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
-    color: white;
-    font-size: 2rem;
   }
 </style>

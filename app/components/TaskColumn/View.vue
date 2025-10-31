@@ -11,7 +11,7 @@
           class="p-3 -m-3"
           title="добавить задачу"
           aria-label="добавить задачу"
-          @click="openModal('addTask')"
+          @click="openModal(new TaskRecord(), 'div')"
         >
           <UiIcon icon="plus" class="w-5 cursor-pointer" />
         </UiButton>
@@ -19,7 +19,7 @@
           class="p-3 -m-3"
           title="редактировать колонку"
           aria-label="редактировать колонку"
-          @click="openModal('editColumn')"
+          @click="openModal(column, 'div')"
         >
           <UiIcon icon="editPen" class="w-5 cursor-pointer" />
         </UiButton>
@@ -39,26 +39,15 @@
         </template>
       </draggableComponent>
     </ClientOnly>
-    <UiModal
-      :visible="showModal"
-      :modalType="modalType"
-      @close="showModal = false"
-    />
   </article>
 </template>
 
 <script lang="ts" setup>
   import draggableComponent from 'vuedraggable';
-  import type { ITaskColumn } from '~/types/board';
+  import { TaskRecord, type ITaskColumn } from '~/types/board';
 
   const props = defineProps<{ column: ITaskColumn }>();
-  const showModal = ref(false);
-  const modalType = ref('');
-
-  function openModal(type: string) {
-    modalType.value = type;
-    showModal.value = true;
-  }
+  const { openModal } = useModal();
 </script>
 
 <style></style>
