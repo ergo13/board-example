@@ -6,7 +6,8 @@
 </template>
 
 <script lang="ts" setup>
-  import type { ITask } from '~/store/BoardStore';
+  import type { ITask } from '~/types/board';
+
   const props = defineProps<{ task: ITask }>();
 </script>
 

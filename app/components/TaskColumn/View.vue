@@ -35,7 +35,7 @@
         :animation="200"
       >
         <template #item="{ element }">
-          <Task :task="element" :key="element.id" />
+          <TaskView :task="element" :key="element.id" />
         </template>
       </draggableComponent>
     </ClientOnly>
@@ -48,8 +48,8 @@
 </template>
 
 <script lang="ts" setup>
-  import type { ITaskColumn } from '~/store/BoardStore';
   import draggableComponent from 'vuedraggable';
+  import type { ITaskColumn } from '~/types/board';
 
   const props = defineProps<{ column: ITaskColumn }>();
   const showModal = ref(false);

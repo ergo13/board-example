@@ -16,12 +16,16 @@
     <button @click="toggleTheme">{{ isDark ? 'Темная' : 'Светлая' }}</button>
   </aside>
   <h2 class="pb-5 order-2">{{ boardStore.activeBoard?.title }}</h2>
-  <Board v-if="boardStore.activeBoard" class="order-4" :board="boardStore.activeBoard" />
+  <BoardView
+    v-if="boardStore.activeBoard"
+    class="order-4"
+    :board="boardStore.activeBoard"
+  />
   <h2 class="order-4" v-else>Досок нет</h2>
 </template>
 
 <script lang="ts" setup>
-  import { useBoardStore, type IBoard } from '~/store/BoardStore';
+  import { useBoardStore } from '~/store/BoardStore';
   const boardStore = useBoardStore();
   const { toggleTheme, isDark } = useTheme();
 </script>

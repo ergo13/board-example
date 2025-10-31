@@ -11,7 +11,7 @@
         :animation="200"
       >
         <template #item="{ element }">
-          <TaskColumn :column="element" />
+          <TaskColumnView :column="element" />
         </template>
       </draggableComponent>
     </ClientOnly>
@@ -30,8 +30,8 @@
 </template>
 
 <script lang="ts" setup>
-  import type { IBoard } from '~/store/BoardStore';
   import draggableComponent from 'vuedraggable';
+  import type { IBoard } from '~/types/board';
 
   const props = defineProps<{ board: IBoard }>();
 </script>
