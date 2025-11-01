@@ -58,3 +58,14 @@ main {
   grid-template-rows: min-content 70vh;
   gap: 12px;
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+
+  background: var(--bg-column);
+  box-shadow: var(--box-shadow);
+  transition: background var(--transition), box-shadow var(--transition);
+  padding: 40px;
+}

@@ -11,7 +11,7 @@
           class="p-3 -m-3"
           title="добавить задачу"
           aria-label="добавить задачу"
-          @click="openModal(new TaskRecord(), 'div')"
+          @click="openModal(new TaskRecord(), ModalTypes.TASK)"
         >
           <UiIcon icon="plus" class="w-5 cursor-pointer" />
         </UiButton>
@@ -19,7 +19,7 @@
           class="p-3 -m-3"
           title="редактировать колонку"
           aria-label="редактировать колонку"
-          @click="openModal(column, 'div')"
+          @click="openModal(column, ModalTypes.COLUMN)"
         >
           <UiIcon icon="editPen" class="w-5 cursor-pointer" />
         </UiButton>
@@ -44,7 +44,7 @@
 
 <script lang="ts" setup>
   import draggableComponent from 'vuedraggable';
-  import { TaskRecord, type ITaskColumn } from '~/types/board';
+  import { ModalTypes, TaskRecord, type ITaskColumn } from '~/types/board';
 
   const props = defineProps<{ column: ITaskColumn }>();
   const { openModal } = useModal();

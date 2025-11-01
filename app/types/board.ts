@@ -16,6 +16,11 @@ export interface ITask {
   id: number;
 }
 
+export enum ModalTypes {
+  'TASK' = 'TASK',
+  'COLUMN' = 'COLUMN',
+}
+
 export class BoardRecord implements IBoard {
   title: string;
   columns: ITaskColumn[];
@@ -45,7 +50,7 @@ export class TaskRecord implements ITask {
   id: number;
   title: string;
 
-  constructor(title: string = 'Новая задача', description: string = 'Описание') {
+  constructor(title: string, description: string) {
     this.description = description;
     this.title = title;
     this.id = Date.now() + +(Math.random() * 1000).toFixed();

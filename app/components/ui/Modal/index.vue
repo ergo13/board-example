@@ -1,20 +1,16 @@
 <template>
-  <ClientOnly>
+  <Teleport to="body">
     <Transition>
-      <Teleport to="body">
-        <div v-if="props.visible" class="ui-modal" @click.self="$emit('close')">
-        <component :is="props.component" v-bind="props.modalData" />
+      <div v-if="props.visible" class="ui-modal" @click.self="$emit('close')">
+        <slot></slot>
       </div>
-      </Teleport>
     </Transition>
-  </ClientOnly>
+  </Teleport>
 </template>
 
 <script lang="ts" setup>
   const props = defineProps<{
     visible: boolean;
-    component: string;
-    modalData: any;
   }>();
 
   const emit = defineEmits<{
